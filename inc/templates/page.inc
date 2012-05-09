@@ -46,6 +46,7 @@
             <span class="icon-bar"></span>
           </a>
           <a class="brand" href="/">joelsoderberg.se</a>
+<!--
           <div class="btn-group pull-right">
             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
               <i class="icon-user"></i> Administrator
@@ -57,10 +58,10 @@
               <li class="divider"></li>
               <li><a href="/user/logout">Sign Out</a></li>
             </ul>
-          </div>
+          </div> -->
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="/">Blog</a></li>
+              <li class="<?php if(!arg(0) || arg(0) === 'post') echo 'active'; ?>"><a href="/">Blog</a></li>
               <li><a href="/about">About</a></li>
               <li><a href="/contact">Contact</a></li>
             </ul>

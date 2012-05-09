@@ -20,7 +20,8 @@ function fatal_error($msg) {
   die();
 }
 
-function not_found($msg) {
+function not_found($msg = '') {
+  header('HTTP/1.0 404 Not Found');
   echo render('inc/templates/404.inc', array('message' => $msg));
   die();
 }

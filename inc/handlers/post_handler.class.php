@@ -17,6 +17,7 @@ class PostHandler {
   }
 
   function showCreate() {
+    not_found();
     if (!empty($_POST)) {
       $data = array(
         'title' => $_POST['title'],
