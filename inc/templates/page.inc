@@ -3,7 +3,7 @@
   <head>
 
     <meta charset="utf-8">
-    <title>joelsoderberg.se, own your own computing!</title>
+    <title><?php if (!empty($vars['page_title'])) echo $vars['page_title'] . ' | '; ?>joelsoderberg.se, own your own computing!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A blog about tech and random geekieness">
     <meta name="author" content="Joel Söderberg">

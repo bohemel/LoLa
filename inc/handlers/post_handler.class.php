@@ -51,6 +51,7 @@ class PostHandler {
     if(!$post->isLoaded())
       not_found(':(');
     else {
+      page_title($post->data['title']);
       $post->preprocess();
       return $this->render($post->data, FALSE);
     }

@@ -1,5 +1,12 @@
 <?php
 
+function page_title($new_title = '') {
+  static $page_title = '';
+  if (!empty($new_title))
+    $page_title = $new_title;
+  return $page_title;
+}
+
 function redirect($url) {
   header('Location: '. $url);
   die();
@@ -70,8 +77,10 @@ function run() {
   elseif ($page_file = find(arg(0), 'page'))
     $vars['content'] = render($page_file);
 
-  if(!empty($vars))
+  if(!empty($vars)) {
+    $vars['page_title'] = page_title();
     render('inc/templates/page.inc', $vars, TRUE);
+  }
   else
     not_found(':(');
 }
