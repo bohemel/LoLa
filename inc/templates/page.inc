@@ -61,8 +61,8 @@
           </div> -->
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="<?php if(!arg(0) || arg(0) === 'post') echo 'active'; ?>"><a href="/">Blog</a></li>
-              <li><a href="/about">About</a></li>
+              <li class="<?php if (!arg(0) || arg(0) === 'post') echo 'active'; ?>"><a href="/">Blog</a></li>
+              <li class="<?php if (arg(0) === 'about') echo 'active'; ?>"><a href="/about">About</a></li>
               <li><a href="/contact">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->

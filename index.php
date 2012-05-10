@@ -26,6 +26,27 @@ function not_found($msg = '') {
   die();
 }
 
+function find($name, $type = 'handler') {
+  $filename = 'inc/';
+  if ($type === 'handler')
+    $filename .= 'handlers/' . $name . '_handler.class.php';
+  elseif ($type === 'page')
+    $filename .= 'pages/' . $name . '.inc';
+  else
+    return FALSE;
+  if (!file_exists($filename))
+    return FALSE;
+  return $filename;
+}
+
+function inc($name, $type = 'handler') {
+  if ($filename = find($name, $type)) {
+    require_once $filename;
+    return TRUE;
+  }
+  return FALSE;
+}
+
 function arg($id = NULL) {
   if(!isset($_GET['q']))
     return NULL;
@@ -41,13 +62,16 @@ function run() {
   if(arg(0))
     $handler = arg(0);
 
-  if (file_exists('inc/handlers/' . $handler . '_handler.class.php')) {
-    require_once 'inc/handlers/' . $handler . '_handler.class.php';
+  if (inc($handler)) {
     $handler_class = ucfirst($handler) . 'Handler';
     $handler = new $handler_class();
     $vars['content'] = $handler->handle();
-    return render('inc/templates/page.inc', $vars, TRUE);
   }
+  elseif ($page_file = find(arg(0), 'page'))
+    $vars['content'] = render($page_file);
+
+  if(!empty($vars))
+    render('inc/templates/page.inc', $vars, TRUE);
   else
     not_found(':(');
 }

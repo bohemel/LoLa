@@ -14,10 +14,10 @@ class PostHandler {
     // post page
     elseif (is_numeric(arg(1)))
       return $this->post(arg(1));
+    not_found();
   }
 
   function showCreate() {
-    not_found();
     if (!empty($_POST)) {
       $data = array(
         'title' => $_POST['title'],
