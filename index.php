@@ -1,5 +1,50 @@
 <?php
 
+define('DATA_DIR', 'data');
+define('CACHE_DIR', 'cache');
+define('VALID_OPENID', 'openid_here');
+define('C_SESSION_NAME', 'SIDKBD989BKJV08KUSFDL087KJSFKSKJC987IG');
+
+function get_session_name() {
+  return C_SESSION_NAME;
+}
+
+function get_session() {
+  if (!file_exists(DATA_DIR . '/session.dat'))
+    return FALSE;
+  $session = @unserialize(file_get_contents(DATA_DIR . '/session.dat'));
+  if (!$session)
+    return array();
+  return $session;
+}
+
+function active_auth_token() {
+  $session = get_session();
+  if (!empty($session) && !empty($session['token']))
+    return $session['token'];
+}
+
+function generate_auth_token() {
+  return md5(microtime());
+}
+
+function set_auth_session($data = array()) {
+  $data['token'] = generate_auth_token();
+  file_put_contents(DATA_DIR . '/session.dat', serialize($data));
+  setcookie(get_session_name(), $data['token']);
+}
+
+function destroy_auth_session() {
+  $session_name = get_session_name();
+  if (file_exists(DATA_DIR . '/session.dat'))
+    unlink(DATA_DIR . '/session.dat');
+  setcookie($session_name, '', time() -3600);
+}
+
+function is_auth() {
+  return (isset($_COOKIE[get_session_name()]) && $_COOKIE[get_session_name()] === active_auth_token());
+}
+
 function page_title($new_title = '') {
   static $page_title = '';
   if (!empty($new_title))
@@ -65,6 +110,8 @@ function arg($id = NULL) {
 }
 
 function run() {
+
+
   $handler = 'post';
   if(arg(0))
     $handler = arg(0);

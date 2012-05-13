@@ -12,23 +12,52 @@ class PostHandler {
     elseif (arg(1) === 'create' && !arg(2))
       return $this->showCreate();
     // post page
+    elseif (arg(1) === 'edit' && arg(2))
+      return $this->edit();
     elseif (is_numeric(arg(1)))
       return $this->post(arg(1));
     not_found();
   }
 
-  function showCreate() {
-    if (!empty($_POST)) {
-      $data = array(
-        'title' => $_POST['title'],
-        'content' => $_POST['content'],
-        'tags' => array_map('trim', explode(',', trim($_POST['tags'], ', '))),
-      );
-      $post = new Post($data);
-      redirect($post->prettyUrl());
+  function edit() {
+    if (!is_auth()) {
+      redirect('/authenticate');
     }
-    else
-      return render('inc/templates/create_post.inc');
+    else {
+      $post = new Post(arg(2));
+      if (!$post->isLoaded())
+        not_found(':(');
+      if (!empty($_POST)) {
+        $post->data['title'] = $_POST['title'];
+        $post->data['content'] = $_POST['content'];
+        $post->data['tags'] = array_map('trim', explode(',', trim($_POST['tags'], ', ')));
+        $post->update();
+        redirect($post->prettyUrl());
+      }
+      else {
+        return render('inc/templates/edit.inc', $post->data);
+      }
+    }
+
+  }
+
+  function showCreate() {
+    if (!is_auth()) {
+      redirect('/authenticate');
+    }
+    else {
+      if (!empty($_POST)) {
+        $data = array(
+          'title' => $_POST['title'],
+          'content' => $_POST['content'],
+          'tags' => array_map('trim', explode(',', trim($_POST['tags'], ', '))),
+        );
+        $post = new Post($data);
+        redirect($post->prettyUrl());
+      }
+      else
+        return render('inc/templates/create_post.inc');
+    }
   }
 
   function index() {
@@ -41,8 +70,8 @@ class PostHandler {
     return $output;
   }
 
-  function render($data, $title_as_link = TRUE) {
-    $data['title_as_link'] = $title_as_link;
+  function render($data, $in_list = TRUE) {
+    $data['in_list'] = $in_list;
     return render('inc/templates/post.inc', $data);
   }
 

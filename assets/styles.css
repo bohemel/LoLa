@@ -1,0 +1,25 @@
+body {
+  padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+footer {
+  margin-top: 45px;
+  padding: 35px 0 36px;
+  border-top: 1px solid #E5E5E5;
+}
+
+.page-header h1 i {
+  margin-top: 10px;
+}
+
+article footer {
+  margin: 0 0 9px;
+  padding: 0;
+  border: none;
+  color: #999;
+}
+
+article footer a:hover,
+article footer a {
+  color: #999;
+}
+
