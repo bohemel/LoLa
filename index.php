@@ -91,7 +91,9 @@ function destroy_auth_session() {
  * Returns TRUE if the current user is authenticated
  */
 function is_auth() {
-  return (isset($_COOKIE[get_session_name()]) && $_COOKIE[get_session_name()] === active_auth_token());
+  return 
+    (isset($_COOKIE[get_session_name()]) && 
+    $_COOKIE[get_session_name()] === active_auth_token());
 }
 
 /**
