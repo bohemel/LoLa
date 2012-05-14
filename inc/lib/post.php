@@ -1,6 +1,6 @@
 <?php
 
-require_once 'inc/lib/crud.class.php';
+require_once 'inc/lib/crud.php';
 
 class Post extends Crud {
 

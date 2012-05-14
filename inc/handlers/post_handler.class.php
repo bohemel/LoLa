@@ -1,6 +1,6 @@
 <?php
 
-require_once 'inc/lib/post.class.php';
+require_once 'inc/lib/post.php';
 
 class PostHandler {
 

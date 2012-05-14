@@ -8,9 +8,9 @@
     <meta name="description" content="A blog about tech and random geekieness">
     <meta name="author" content="Joel Söderberg">
 
-    <link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="/assets/styles.css" rel="stylesheet">
-    <link href="/assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="<?= relative_path('assets/bootstrap/css/bootstrap.css'); ?>" rel="stylesheet">
+    <link href="<?= relative_path('assets/styles.css'); ?>" rel="stylesheet">
+    <link href="<?= relative_path('assets/bootstrap/css/bootstrap-responsive.css'); ?>" rel="stylesheet">
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -35,7 +35,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/">joelsoderberg.se</a>
+          <a class="brand" href="<?= base_path(); ?>">joelsoderberg.se</a>
 <!--
           <div class="btn-group pull-right">
             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -51,9 +51,9 @@
           </div> -->
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="<?php if (!arg(0) || arg(0) === 'post') echo 'active'; ?>"><a href="/">Blog</a></li>
-              <li class="<?php if (arg(0) === 'about') echo 'active'; ?>"><a href="/about">About</a></li>
-              <li><a href="/contact">Contact</a></li>
+              <li class="<?php if (!arg(0) || arg(0) === 'post') echo 'active'; ?>"><a href="<?= base_path(); ?>">Blog</a></li>
+              <li class="<?php if (arg(0) === 'about') echo 'active'; ?>"><a href="<?= relative_path('about'); ?>">About</a></li>
+              <li><a href="<?= relative_path('contact'); ?>">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -61,7 +61,7 @@
     </div>
 
     <div class="container">
-
+      
       <?php if(!arg(0) || (arg(0) === 'posts' && !arg(1))): ?>
       <div class="row">
         <div class="span12">
@@ -97,7 +97,7 @@
     </div> <!-- /container -->
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="/assets/bootstrap/js/bootstrap.js"></script>
-    <script src="/assets/scripts.js"></script>
+    <script src="<?= relative_path('assets/bootstrap/js/bootstrap.js'); ?>"></script>
+    <script src="<?= relative_path('assets/scripts.js'); ?>"></script>
   </body>
 </html>

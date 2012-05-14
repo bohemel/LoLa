@@ -202,7 +202,21 @@ function arg($id = NULL) {
   return $args;
 }
 
+function base_path() {
+  // Stole this from Drupal!
+  static $dir = '';
+  if(empty($dir)) 
+    $dir = rtrim(dirname($_SERVER['SCRIPT_NAME']), '\/') . '/';
+  return $dir;
+}
+
+function relative_path($path = '') {
+  return base_path() . $path;
+}
+
 function run() {
+  
+  base_path();
 
   require_once 'conf.inc';
 
