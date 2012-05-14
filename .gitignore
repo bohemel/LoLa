@@ -1,3 +1,7 @@
 cache*
 data*
 conf.inc
+.DS_Store
+.localized
+.htaccess
+devs/
