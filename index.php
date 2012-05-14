@@ -24,8 +24,8 @@ function conf($key, $value = FALSE) {
   static $conf = array();
   if ($value)
     $conf[$key] = $value;
-  if (isset($conf['value']))
-    return $conf[$value];
+  if (isset($conf[$key]))
+    return $conf[$key];
   else
     return FALSE;
 }
