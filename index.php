@@ -216,11 +216,20 @@ function relative_path($path = '') {
   return base_path() . $path;
 }
 
+/**
+ * Main function and app entry point
+ *
+ * This function holds the routing functionality of LoLa. Not exactly rocket
+ * science. Just checks the first argument and either loads the rss class, a
+ * handler class or a static page. If 
+ */
 function run() {
-  
-  base_path();
 
   require_once 'conf.inc';
+  
+//  require_once 'inc/lib/twitter.php';
+//  $t = new Twitter();
+//  $t->tweet('Sitter och utvecklar på en grej och måste dra iväg ett fult testtweet för att se hur twitters api egentligen funkar http://joelsoderberg.se/post/56/hahaha');
 
   $handler = 'post';
   if(arg(0) && arg(0) === 'rss.xml') {
@@ -247,5 +256,6 @@ function run() {
     not_found(':(');
 }
 
+// RUN RUN RUN
 run();
 
