@@ -1,6 +1,8 @@
 # LoLa
 
-A super bad and super simple blog platform
+A super bad and super simple blog platform. Runs on my personal site 
+[http://joelsoderberg.se](http://joelsoderberg.se) if you want to see it in 
+action.
 
  * Single user
  * NO database (all data is stored in files on the filesystem)

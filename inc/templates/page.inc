@@ -15,11 +15,10 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="<?= relative_path('assets/img/favicon.png'); ?>" type="image/png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?= relative_path('assets/img/ios-144.png'); ?>">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?= relative_path('assets/img/ios-72.png'); ?>">
+    <link rel="apple-touch-icon-precomposed" href="<?= relative_path('assets/img/ios-57.png'); ?>">
 
     <link rel="alternate" type="application/rss+xml" title="joelsoderberg.se Feed" href="http://joelsoderberg.se/rss.xml">
 
