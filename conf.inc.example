@@ -1,0 +1,24 @@
+<?php
+
+/**'
+ * @file
+ * Example configuration file file 
+ *
+ * Currenty all conf variables being used
+ */
+
+conf('hostname', 'example.com');
+
+// to authenticate user
+conf('valid_openid', 'a valid open id');
+conf('session_name'. 'the name of the session cookie');
+
+// to enable twitter fill in these values
+conf('twitter_access_token', '');
+conf('twitter_access_token_secret', '');
+
+// All user data is stored in the data directory
+conf('data_dir', 'data');
+
+// All cache files are created in the cache directory
+conf('cache_dir', 'cache');
