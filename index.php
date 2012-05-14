@@ -165,12 +165,27 @@ function fatal_error($msg) {
   die();
 }
 
+/**
+ * Renders a 404 file not found page and sets http headers accordingly
+ */
 function not_found($msg = '') {
   header('HTTP/1.0 404 Not Found');
   echo render('inc/templates/404.inc', array('message' => $msg));
   die();
 }
 
+/**
+ * Finds a file of specified type.
+ * 
+ * @param string $name
+ *   Base name of file
+ *
+ * @param string $type
+ *   (optional) Type of file. If given must be one of: (handler, page, lib)
+ *
+ * @return
+ *   Returns filename as a string if file is found. If not returns FALSE
+ */
 function find($name, $type = 'handler') {
   $filename = 'inc/';
   if ($type === 'handler')
@@ -186,6 +201,18 @@ function find($name, $type = 'handler') {
   return $filename;
 }
 
+/**
+ * Include file of specified type.
+ * 
+ * @param string $name
+ *   Base name of file
+ *
+ * @param string $type
+ *   Not used
+ *
+ * @return bool
+ *   Returns TRUE if included seccessfully.
+ */
 function inc($name, $type = 'handler') {
   if ($filename = find($name, $type)) {
     require_once $filename;
@@ -194,6 +221,20 @@ function inc($name, $type = 'handler') {
   return FALSE;
 }
 
+
+/**
+ * Return numblered arg from path.
+ * 
+ * Example: If path (relative to base path) is post/34. arg(0) returns 'post'
+ * and arg(1) returns '34'
+ * 
+ * @param $id
+ *   (optional) The index of the argsument requested.
+ *
+ * @return
+ *   If $id is given argument att that index. If $id nog given, returns the 
+ *   entire argument array.
+ */
 function arg($id = NULL) {
   if(!isset($_GET['q']))
     return NULL;
@@ -204,6 +245,15 @@ function arg($id = NULL) {
   return $args;
 }
 
+/**
+ * Returns the base path of the app.
+ *
+ * The base path is the path on the webserver where lola's index.php resides.
+ *
+ * Examples
+ *  - example.com/lola/index.php -> returns /lola/
+ *  - example.com/index.php -> returns /
+ */
 function base_path() {
   // Stole this from Drupal!
   static $dir = '';
@@ -212,6 +262,9 @@ function base_path() {
   return $dir;
 }
 
+/**
+ * Returns a path relative to the app.
+ */
 function relative_path($path = '') {
   return base_path() . $path;
 }
@@ -221,7 +274,11 @@ function relative_path($path = '') {
  *
  * This function holds the routing functionality of LoLa. Not exactly rocket
  * science. Just checks the first argument and either loads the rss class, a
- * handler class or a static page. If 
+ * handler class or a static page. Calls the not_found() function as if all 
+ * else fails.
+ *
+ * If handler or page is found it sends the result into the render function
+ * with the main page template.
  */
 function run() {
 
