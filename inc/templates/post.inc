@@ -14,7 +14,7 @@
     </div>
     <?= $vars['content']; ?>
     <footer>
-      Permalink: <a href="http://joelsoderberg.se<?= $vars['pretty_url']; ?>"><?= $vars['pretty_url']; ?></a>
+      Permalink: <a href="http://<?= conf('hostname') . $vars['pretty_url']; ?>"><?= $vars['pretty_url']; ?></a> 
       <?php if(!empty($vars['tags'])): ?>
         <br />Tags: 
         <?php foreach ($vars['tags'] as $tag): ?>
