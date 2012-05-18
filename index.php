@@ -48,14 +48,14 @@ function consolidate($dir, $type, $rebuild = FALSE) {
  * @return
  *   The value for given configuration key or FALSE if the key not is set.
  */
-function conf($key, $value = FALSE) {
+function conf($key, $value = NULL) {
   static $conf = array();
-  if ($value)
+  if (!is_null($value))
     $conf[$key] = $value;
   if (isset($conf[$key]))
     return $conf[$key];
   else
-    return FALSE;
+    return NULL;
 }
 
 /**
@@ -331,13 +331,16 @@ function invalidate_cache($path = '') {
  */
 function run() {
 
+  mb_internal_encoding('UTF-8');
+  require_once 'conf.inc';
+
   $handler = 'post';
-  if(arg(0) && arg(0) === 'rss.xml') {
+  if (arg(0) && arg(0) === 'rss.xml') {
     inc('rss', 'lib');
     new RssFeed();
     return;
   }
-  elseif(arg(0))
+  elseif (arg(0))
     $handler = arg(0);
 
   if (inc($handler)) {
@@ -348,10 +351,10 @@ function run() {
   elseif ($page_file = find(arg(0), 'page'))
     $vars['content'] = render($page_file);
 
-  if(!empty($vars)) {
+  if (!empty($vars)) {
     $vars['page_title'] = page_title();
     $content = render('inc/templates/page.inc', $vars, TRUE);
-    if(conf('cache'))
+    if (conf('cache'))
       write_cache($content);
   }
   else
@@ -359,7 +362,5 @@ function run() {
 }
 
 // RUN RUN RUN
-mb_internal_encoding('UTF-8');
-require_once 'conf.inc';
 run();
 

@@ -1,8 +1,12 @@
 <?php
 
 class AuthenticateHandler {
+
   function handle() {
+
+    // disable all cache for this handler
     conf('cache', FALSE);
+
     if (is_auth()) {
       if(isset($_GET['logout'])) {
         destroy_auth_session();
