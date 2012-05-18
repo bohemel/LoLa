@@ -80,7 +80,7 @@ class Post extends Crud {
   function generateTweet() {
     if (!$this->processed)
       $this->preprocess();
-    return $this->data['title'] . ' ' . conf('hostname') . $this->data['pretty_url'];
+    return $this->data['title'] . ' http://' . conf('hostname') . $this->data['pretty_url'];
   }
 
   function prettyUrl() {
