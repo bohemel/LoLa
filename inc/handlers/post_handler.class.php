@@ -53,6 +53,7 @@ class PostHandler {
           'tags' => array_map('trim', explode(',', trim($_POST['tags'], ', '))),
         );
         $post = new Post($data);
+        invalidate_cache('/');
         echo $post->generateTweet();
         die();
         redirect($post->prettyUrl());

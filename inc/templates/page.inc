@@ -106,6 +106,7 @@
 
        <br />Links: <a href="<?= relative_path('post/create'); ?>">Create Post</a> <a href="<?= relative_path('authenticate' ); ?>">Account</a> 
         </p>
+       <p><small class="created-by">Page generated.</small></p>
       </footer>
 
     </div> <!-- /container -->

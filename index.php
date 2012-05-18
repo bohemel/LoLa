@@ -26,10 +26,10 @@ function consolidate($dir, $type, $rebuild = FALSE) {
   $filename = $cache_dir . '/consolidated.' . $type;
   if (!file_exists($filename) || $rebuild) {
     if (!is_dir($cache_dir))
-      mkdir($cache_dir, 0770, TRUE);
+      mkdir($cache_dir, 0755, TRUE);
     $content = array();
     foreach (glob($dir . '/*') as $file) {
-      $content[] = file_get_contents($file);
+      $content[] = str_replace('../', base_path() . 'assets/', file_get_contents($file));
     }
     file_put_contents($filename, implode("\n", $content));
   }
@@ -297,6 +297,27 @@ function relative_path($path = '') {
   return base_path() . $path;
 }
 
+function get_cache_filename_from_path($path) {
+  return conf('cache_dir') . '/static/' . conf('hostname') . '/' . $path . '_.html';
+}
+
+function write_cache($content, $path = '') {
+  if (!$path)
+    $path = $_GET['q'];
+  $filename = get_cache_filename_from_path($path);
+  $content = str_replace('<small class="created-by">Page generated.</small>', '<small class="created-by">Page from cache: ' . $filename . '</small>', $content);
+  if (!is_dir(dirname($filename)))
+    mkdir(dirname($filename), 0755, TRUE);
+  file_put_contents($filename, $content);
+}
+
+function invalidate_cache($path = '') {
+  if (!$path)
+    $path = $_GET['q'];
+  $filename = get_cache_filename_from_path($path);
+  unlink($filename);
+}
+
 /**
  * Main function and app entry point
  *
@@ -329,7 +350,9 @@ function run() {
 
   if(!empty($vars)) {
     $vars['page_title'] = page_title();
-    render('inc/templates/page.inc', $vars, TRUE);
+    $content = render('inc/templates/page.inc', $vars, TRUE);
+    if(conf('cache'))
+      write_cache($content);
   }
   else
     not_found(':(');
