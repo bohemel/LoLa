@@ -3,14 +3,13 @@
   <head>
 
     <meta charset="utf-8">
-    <title><?php if (!empty($vars['page_title'])) echo $vars['page_title'] . ' | '; ?>joelsoderberg.se, own your own computing!</title>
+    <title><?php if (!empty($vars['page_title'])) echo $vars['page_title'] . ' | '; ?>joelsoderberg.se, control your own computing!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A blog about tech and random geekieness">
     <meta name="author" content="Joel Söderberg">
-
-    <link href="<?= relative_path('assets/bootstrap/css/bootstrap.css'); ?>" rel="stylesheet">
-    <link href="<?= relative_path('assets/styles.css'); ?>" rel="stylesheet">
-    <link href="<?= relative_path('assets/bootstrap/css/bootstrap-responsive.css'); ?>" rel="stylesheet">
+    
+    <?= consolidate('assets/css', 'css'); ?>
+    
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -112,7 +111,6 @@
     </div> <!-- /container -->
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="<?= relative_path('assets/bootstrap/js/bootstrap.js'); ?>"></script>
-    <script src="<?= relative_path('assets/scripts.js'); ?>"></script>
+    <?= consolidate('assets/js', 'js'); ?>
   </body>
 </html>

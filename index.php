@@ -9,6 +9,32 @@
  *
  * All LoLa code is released under the New BSD License. See COPYRIGHT.txt.
  */
+ 
+function consolidate($dir, $type, $rebuild = FALSE) {
+  $markup = '<script src="' . base_path() . '%s"></script>';
+  if ($type === 'css')
+    $markup = '<link href="' . base_path() . '%s" rel="stylesheet">';
+    
+  if (conf('devel')) {
+    $content = array();
+    foreach (glob($dir . '/*') as $file)
+      $content[] = sprintf($markup, $file);
+    return implode("\n", $content);
+  }
+
+  $cache_dir = conf('cache_dir') . '/c/' . $dir;
+  $filename = $cache_dir . '/consolidated.' . $type;
+  if (!file_exists($filename) || $rebuild) {
+    if (!is_dir($cache_dir))
+      mkdir($cache_dir, 0770, TRUE);
+    $content = array();
+    foreach (glob($dir . '/*') as $file) {
+      $content[] = file_get_contents($file);
+    }
+    file_put_contents($filename, implode("\n", $content));
+  }
+  return sprintf($markup, $filename);
+}
 
 /**
  * Sets and gets configuration values.
@@ -284,10 +310,6 @@ function relative_path($path = '') {
  */
 function run() {
 
-  mb_internal_encoding('UTF-8');
-
-  require_once 'conf.inc';
-
   $handler = 'post';
   if(arg(0) && arg(0) === 'rss.xml') {
     inc('rss', 'lib');
@@ -314,5 +336,7 @@ function run() {
 }
 
 // RUN RUN RUN
+mb_internal_encoding('UTF-8');
+require_once 'conf.inc';
 run();
 

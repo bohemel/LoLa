@@ -12,7 +12,7 @@
       those two things (Well geekyness is a lot of thing), and reposts from
       Reddit. I decided to do all the writing in english. Which is crazy,
       but fun. Hopefully I'll make fewer spelling and grammar mistakes as time
-      progresses. I can't promise some of teh texts and links won't be in
+      progresses. I can't promise some of the texts and links won't be in
       swedish sometimes though.
     </p> 
     
@@ -23,7 +23,7 @@
       develop sites in <a href="http://drupal.org/">Drupal</a>, and I feelt I
       needed a little break from the impressive beast Drupal is (with all the 
       contrib modules etc. etc.). So I wanted to create the opposite. 
-      Something completly ungeneric (is that even a word?).
+      Something completely ungeneric (is that even a word?).
     </p>
     
     <p>
