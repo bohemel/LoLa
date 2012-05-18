@@ -46,7 +46,8 @@
               <li><a href="/post/edit/<?= arg(1); ?>">Edit Post</a></li>
               <?php endif; ?>
               <li class="divider"></li>
-              <li><a href="/user/logout">Sign Out</a></li>
+              <li><a href="/authenticate">Account</a></li>
+              <li><a href="/authenticate?logout">Sign Out</a></li>
             </ul>
           </div> 
           <div class="nav-collapse">
