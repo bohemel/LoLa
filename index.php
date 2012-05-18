@@ -6,6 +6,8 @@
  *
  * This file defines core functions and runs the starts the 'run' function that
  * serves as the applications entry point.
+ *
+ * All LoLa code is released under the New BSD License. See COPYRIGHT.txt.
  */
 
 /**
@@ -18,7 +20,7 @@
  *   Optional. If given, sets the configuration item given by $key.
  * 
  * @return
- *   The value for given configuration keÃ or FALSE if the key not is set.
+ *   The value for given configuration key or FALSE if the key not is set.
  */
 function conf($key, $value = FALSE) {
   static $conf = array();
@@ -157,7 +159,7 @@ function render($file, $vars = array(), $echo = FALSE) {
  * prevents further execution of the system occurs.
  *
  * @param string $msg
- *   Message displayed echoed to teh browser.
+ *   Message displayed echoed to the browser.
  */
 function fatal_error($msg) {
   echo '<pre>';
@@ -282,11 +284,9 @@ function relative_path($path = '') {
  */
 function run() {
 
+  mb_internal_encoding('UTF-8');
+
   require_once 'conf.inc';
-  
-//  require_once 'inc/lib/twitter.php';
-//  $t = new Twitter();
-//  $t->tweet('Sitter och utvecklar på en grej och måste dra iväg ett fult testtweet för att se hur twitters api egentligen funkar http://joelsoderberg.se/post/56/hahaha');
 
   $handler = 'post';
   if(arg(0) && arg(0) === 'rss.xml') {
