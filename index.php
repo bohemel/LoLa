@@ -6,6 +6,8 @@
  *
  * This file defines core functions and runs the starts the 'run' function that
  * serves as the applications entry point.
+ *
+ * All LoLa code is released under the New BSD License. See COPYRIGHT.txt.
  */
 
 /**
@@ -18,7 +20,7 @@
  *   Optional. If given, sets the configuration item given by $key.
  * 
  * @return
- *   The value for given configuration keÃ or FALSE if the key not is set.
+ *   The value for given configuration key or FALSE if the key not is set.
  */
 function conf($key, $value = FALSE) {
   static $conf = array();

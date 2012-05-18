@@ -6,6 +6,7 @@ class Post extends Crud {
 
   protected static $entity = 'post';
   protected static $class_name = 'Post';
+  private $processed = FALSE;
 
   function categorize($link) {
     $ext = array_pop(explode('.', $link));
@@ -61,6 +62,7 @@ class Post extends Crud {
     foreach($tags as $tag)
       if(!empty($tag)) $this->data['tags'][] = trim($tag);
     $this->data['type'] = 'text';
+    $this->data['unprocessed'] = $this->data['content'];
     $lines = explode("\n", trim($this->data['content']));
     $first_line = array_shift($lines);
     if($first_line && $link = filter_var(trim($first_line), FILTER_VALIDATE_URL)) {
@@ -72,6 +74,13 @@ class Post extends Crud {
     require_once 'inc/lib/markdown.php';
     $this->data['content'] = Markdown($this->data['content']);
     $this->data['pretty_url'] = $this->prettyUrl();
+    $this->processed = TRUE;
+  }
+
+  function generateTweet() {
+    if (!$this->processed)
+      $this->preprocess();
+    return $this->data['title'] . ' ' . conf('hostname') . $this->data['pretty_url'];
   }
 
   function prettyUrl() {

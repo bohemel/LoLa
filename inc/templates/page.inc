@@ -90,7 +90,7 @@
         <p>&copy; Joel Söderberg 2012<p>
          <p>Uses <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>, <a href="http://daringfireball.net/projects/markdown/">markdown</a> and <a href="http://michelf.com/projects/php-markdown/">php-markdown</a>
 
-       <br /><a href="/post/create">Create Post</a> <a href="/authenticate">Account</a> 
+       <br />Links: <a href="<?= relative_path('post/create'); ?>">Create Post</a> <a href="<?= relative_path('authenticate' ); ?>">Account</a> 
         </p>
       </footer>
 
