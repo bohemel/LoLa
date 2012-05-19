@@ -8,7 +8,7 @@
     <meta name="description" content="A blog about tech and random geekieness">
     <meta name="author" content="Joel Söderberg">
     
-    <?= consolidate('assets/css', 'css'); ?>
+    <link href="<?= relative_path('assets/css/all.css'); ?>" rel="stylesheet">
     
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -106,11 +106,13 @@
 
        <br />Links: <a href="<?= relative_path('post/create'); ?>">Create Post</a> <a href="<?= relative_path('authenticate' ); ?>">Account</a> 
         </p>
+       <p><small class="created-by">Page generated.</small></p>
       </footer>
 
     </div> <!-- /container -->
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <?= consolidate('assets/js', 'js'); ?>
+    <script src="<?= relative_path('assets/js/all.js'); ?>"></script>
+    
   </body>
 </html>

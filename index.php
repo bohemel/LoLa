@@ -9,32 +9,6 @@
  *
  * All LoLa code is released under the New BSD License. See COPYRIGHT.txt.
  */
- 
-function consolidate($dir, $type, $rebuild = TRUE) {
-  $markup = '<script src="' . base_path() . '%s"></script>';
-  if ($type === 'css')
-    $markup = '<link href="' . base_path() . '%s" rel="stylesheet">';
-    
-  if (conf('devel')) {
-    $content = array();
-    foreach (glob($dir . '/*') as $file)
-      $content[] = sprintf($markup, $file);
-    return implode("\n", $content);
-  }
-
-  $cache_dir = conf('cache_dir') . '/c/' . $dir;
-  $filename = $cache_dir . '/consolidated.' . $type;
-  if (!file_exists($filename) || $rebuild) {
-    if (!is_dir($cache_dir))
-      mkdir($cache_dir, 0777, TRUE);
-    $content = array();
-    foreach (glob($dir . '/*') as $file) {
-      $content[] = str_replace('../', base_path() , 'assets/', file_get_contents($file);
-    }
-    file_put_contents($filename, implode("\n", $content));
-  }
-  return sprintf($markup, $filename);
-}
 
 /**
  * Sets and gets configuration values.
@@ -48,14 +22,14 @@ function consolidate($dir, $type, $rebuild = TRUE) {
  * @return
  *   The value for given configuration key or FALSE if the key not is set.
  */
-function conf($key, $value = FALSE) {
+function conf($key, $value = NULL) {
   static $conf = array();
-  if ($value)
+  if (!is_null($value))
     $conf[$key] = $value;
   if (isset($conf[$key]))
     return $conf[$key];
   else
-    return FALSE;
+    return NULL;
 }
 
 /**
@@ -297,6 +271,27 @@ function relative_path($path = '') {
   return base_path() . $path;
 }
 
+function get_cache_filename_from_path($path) {
+  return conf('cache_dir') . '/static/' . conf('hostname') . '/' . $path . '_.html';
+}
+
+function write_cache($content, $path = '') {
+  if (!$path)
+    $path = $_GET['q'];
+  $filename = get_cache_filename_from_path($path);
+  $content = str_replace('<small class="created-by">Page generated.</small>', '<small class="created-by">Page from cache: ' . $filename . '</small>', $content);
+  if (!is_dir(dirname($filename)))
+    mkdir(dirname($filename), 0755, TRUE);
+  file_put_contents($filename, $content);
+}
+
+function invalidate_cache($path = '') {
+  if (!$path)
+    $path = $_GET['q'];
+  $filename = get_cache_filename_from_path($path);
+  unlink($filename);
+}
+
 /**
  * Main function and app entry point
  *
@@ -310,13 +305,16 @@ function relative_path($path = '') {
  */
 function run() {
 
+  mb_internal_encoding('UTF-8');
+  require_once 'conf.inc';
+
   $handler = 'post';
-  if(arg(0) && arg(0) === 'rss.xml') {
+  if (arg(0) && arg(0) === 'rss.xml') {
     inc('rss', 'lib');
     new RssFeed();
     return;
   }
-  elseif(arg(0))
+  elseif (arg(0))
     $handler = arg(0);
 
   if (inc($handler)) {
@@ -327,16 +325,16 @@ function run() {
   elseif ($page_file = find(arg(0), 'page'))
     $vars['content'] = render($page_file);
 
-  if(!empty($vars)) {
+  if (!empty($vars)) {
     $vars['page_title'] = page_title();
-    render('inc/templates/page.inc', $vars, TRUE);
+    $content = render('inc/templates/page.inc', $vars, TRUE);
+    if (conf('cache'))
+      write_cache($content);
   }
   else
     not_found(':(');
 }
 
 // RUN RUN RUN
-mb_internal_encoding('UTF-8');
-require_once 'conf.inc';
 run();
 
