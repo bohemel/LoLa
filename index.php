@@ -10,7 +10,7 @@
  * All LoLa code is released under the New BSD License. See COPYRIGHT.txt.
  */
  
-function consolidate($dir, $type, $rebuild = FALSE) {
+function consolidate($dir, $type, $rebuild = TRUE) {
   $markup = '<script src="' . base_path() . '%s"></script>';
   if ($type === 'css')
     $markup = '<link href="' . base_path() . '%s" rel="stylesheet">';
@@ -26,10 +26,10 @@ function consolidate($dir, $type, $rebuild = FALSE) {
   $filename = $cache_dir . '/consolidated.' . $type;
   if (!file_exists($filename) || $rebuild) {
     if (!is_dir($cache_dir))
-      mkdir($cache_dir, 0770, TRUE);
+      mkdir($cache_dir, 0777, TRUE);
     $content = array();
     foreach (glob($dir . '/*') as $file) {
-      $content[] = file_get_contents($file);
+      $content[] = str_replace('../', base_path() , 'assets/', file_get_contents($file);
     }
     file_put_contents($filename, implode("\n", $content));
   }
