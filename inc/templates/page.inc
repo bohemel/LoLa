@@ -101,12 +101,8 @@
 
       <footer class="footer">
         <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>&copy; Joel Söderberg 2012<p>
-         <p>Uses <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>, <a href="http://daringfireball.net/projects/markdown/">markdown</a> and <a href="http://michelf.com/projects/php-markdown/">php-markdown</a>
-
-       <br />Links: <a href="<?= relative_path('post/create'); ?>">Create Post</a> <a href="<?= relative_path('authenticate' ); ?>">Account</a> 
-        </p>
-       <p><small class="created-by">Page generated.</small></p>
+        <p>&copy; Joel S&ouml;derberg 2012</p>
+        <p><small class="created-by">Page generated.</small></p>
       </footer>
 
     </div> <!-- /container -->
