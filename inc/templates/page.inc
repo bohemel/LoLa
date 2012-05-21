@@ -48,21 +48,24 @@
             <span class="icon-bar"></span>
           </a>
           <a class="brand" href="<?= base_path(); ?>">joelsoderberg.se</a>
-          <div style="display: none;" id="user-menu" class="btn-group pull-right">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              <i class="icon-user"></i> Administrator
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <li><a href="/post/create">Create Post</a></li>
-              <?php if(arg(0) === 'post' && is_numeric(arg(1))): ?>
-              <li><a href="/post/edit/<?= arg(1); ?>">Edit Post</a></li>
-              <?php endif; ?>
-              <li class="divider"></li>
-              <li><a href="/authenticate">Account</a></li>
-              <li><a href="/authenticate?logout">Sign Out</a></li>
-            </ul>
-          </div> 
+          <ul style="display: none;" id="user-menu" class="nav pull-right">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                Admin
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="/post/create">Create Post</a></li>
+                <?php if(arg(0) === 'post' && is_numeric(arg(1))): ?>
+                <li><a href="/post/edit/<?= arg(1); ?>">Edit Post</a></li>
+                <li><a href="/post/share/<?= arg(1); ?>">Share Post</a></li>
+                <?php endif; ?>
+                <li class="divider"></li>
+                <li><a href="/authenticate">Account</a></li>
+                <li><a href="/authenticate?logout">Sign Out</a></li>
+              </ul>
+            </li>
+          </ul> 
           <div class="nav-collapse">
             <ul class="nav">
               <li class="<?php if (!arg(0) || arg(0) === 'post') echo 'active'; ?>"><a href="<?= base_path(); ?>">Blog</a></li>

@@ -10,16 +10,21 @@ class PostHandler {
       return $this->index();
     // create
     elseif (arg(1) === 'create' && !arg(2))
-      return $this->showCreate();
+      return $this->create();
     // post page
     elseif (arg(1) === 'edit' && arg(2))
       return $this->edit();
+    // share page
+    elseif (arg(1) === 'share' && arg(2))
+      return $this->share();
     elseif (is_numeric(arg(1)))
       return $this->post(arg(1));
     not_found();
   }
 
   function edit() {
+    // never cache
+    conf('cache', FALSE);
     if (!is_auth()) {
       redirect('/authenticate');
     }
@@ -32,16 +37,33 @@ class PostHandler {
         $post->data['content'] = $_POST['content'];
         $post->data['tags'] = array_map('trim', explode(',', trim($_POST['tags'], ', ')));
         $post->update();
+        invalidate_cache('/');
+        invalidate_cache($post->prettyUrl());
         redirect($post->prettyUrl());
       }
       else {
         return render('inc/templates/edit.inc', $post->data);
       }
     }
-
   }
 
-  function showCreate() {
+  function share() {
+    // never cache
+    conf('cache', FALSE);
+    if (!is_auth()) {
+      redirect('/authenticate');
+    }
+    else {
+      $post = new Post(arg(2));
+      if (!$post->isLoaded())
+        not_found(':(');
+      return render('inc/templates/share.inc', array('id' => $post->id, 'content' => $post->generateTweet()));
+    }
+  }
+
+  function create() {
+    // never cache
+    conf('cache', FALSE);
     if (!is_auth()) {
       redirect('/authenticate');
     }
@@ -54,8 +76,6 @@ class PostHandler {
         );
         $post = new Post($data);
         invalidate_cache('/');
-        echo $post->generateTweet();
-        die();
         redirect($post->prettyUrl());
       }
       else
